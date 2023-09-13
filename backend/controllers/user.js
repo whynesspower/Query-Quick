@@ -1,7 +1,35 @@
-const User = require("../models/endUser");
+const User = require("../models/user");
 const { sendMessage } = require("./message");
 const Chat = require("../models/chat");
 const Message = require("../models/message");
+
+exports.registerCustomer = async (req, res, next) => {
+  try {
+    const { userId,isAgent } = req.body;
+    const newUser = new User({
+      userId: userId,
+      isAgent: isAgent,
+      email: userId,
+    });
+    await newUser.save();
+    return res.status(200).json({
+      message: "user created successfully",
+      success: true,
+      newUser,
+    });
+  } catch (error) {
+    if (error.code === 11000 && error.keyPattern.userId === 1) {
+      return res.status(400).json({
+        message: "user with that userId already exists",
+      });
+    } else {
+      console.error(
+        "An error occurred while creating the user:",
+        error.message
+      );
+    }
+  }
+};
 
 exports.loginCustomer = async (req, res, next) => {
   try {
@@ -65,60 +93,6 @@ exports.searchCustomers = async (req, res, next) => {
       users,
     });
   } catch (err) {}
-};
-
-exports.addUsers = async (req, res) => {
-  try {
-    for (let i = 0; i < users.length; i++) {
-      const chat = await Chat.findOne({ chatId: users[i].userId });
-      console.log(chat, "******");
-      var message = await Message.create({
-        chat: chat._id,
-        sender: chat.users[0],
-        content: users[i].content,
-        timestamp: users[i].timestamp,
-      });
-      message = await message.populate("sender", "userId isAgent");
-      message = await message.populate("chat");
-      message = await User.populate(message, {
-        path: "chat.users",
-        select: "userId isAgent",
-      });
-      await Chat.findByIdAndUpdate(chat._id, { latestMessage: message });
-    }
-
-    return res.status(200).json({ success: true });
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-exports.registerCustomer = async (req, res, next) => {
-  try {
-    const { userId, isAgent } = req.body;
-    const newUser = new User({
-      userId: userId,
-      isAgent: isAgent,
-      email: userId,
-    });
-    await newUser.save();
-    return res.status(200).json({
-      message: "user created successfully",
-      success: true,
-      newUser,
-    });
-  } catch (error) {
-    if (error.code === 11000 && error.keyPattern.userId === 1) {
-      return res.status(400).json({
-        message: "user with that userId already exists",
-      });
-    } else {
-      console.error(
-        "An error occurred while creating the user:",
-        error.message
-      );
-    }
-  }
 };
 
 const users = [
@@ -670,3 +644,29 @@ const users = [
       "Hi Branch...now my Application was rejected recently on 1st Feb 2017. I had borrowed Sh.25,000 in December 2015 of which I was slightly late in paying but I payed the whole loan today only to be dissapointed when I apply for another. It says I reapply again in 7days which is too long for me at the moment because I desperately need the cash. How can you assist?",
   },
 ];
+
+exports.addUsers = async (req, res) => {
+  try {
+    for (let i = 0; i < users.length; i++) {
+      const chat = await Chat.findOne({ chatId: users[i].userId });
+      console.log(chat,'******');
+      var message = await Message.create({
+        chat : chat._id,
+        sender : chat.users[0],
+        content : users[i].content,
+        timestamp : users[i].timestamp
+      });
+      message = await message.populate("sender", "userId isAgent");
+      message = await message.populate("chat");
+      message = await User.populate(message, {
+        path: "chat.users",
+        select: "userId isAgent",
+      });
+      await Chat.findByIdAndUpdate(chat._id, { latestMessage: message });
+    }
+
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    console.log(err);
+  }
+};
