@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes,Route } from "react-router-dom";
+import Landing from "./pages/Home";
+import SignInCustomer from "./pages/customers/SignIn";
+import RaiseQuery from "./pages/customers/RaiseQuery";
+import CustomerChatbox from "./pages/customers/ChatBox";
+import SignInAgent from "./pages/agents/SignIn";
+import AgentChatBox from "./pages/agents/ChatBox";
+import SignupCustomer from "./pages/customers/Signup";
+import SignupAgent from "./pages/agents/SingUp";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Routes>
+          <Route path="/" exact element={<Landing />} />
+          <Route path="/logincustomer" exact element={<SignInCustomer />} />
+          <Route path="/raisequery" exact element={<RaiseQuery />} />
+          <Route path="/customerchatbox" exact element={<CustomerChatbox />} />
+          <Route path="/loginagent" exact element={<SignInAgent/>} />
+          <Route path="/agentchatbox" exact element={<AgentChatBox />} />
+          <Route path="/customersignup" exact element={<SignupCustomer/>} />
+          <Route path="/agentsignup" exact element={<SignupAgent/>} />
+      </Routes>
   );
 }
 
