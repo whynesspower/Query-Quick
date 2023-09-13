@@ -1,0 +1,14 @@
+## This repository is the part of assignment submission for Branch International Backend engineering intern-
+
+## private listed youtube video:
+
+https://youtu.be/K5St0kOrPa0
+
+## Steps for installation:
+
+```
+1. install dependancies in the backend and frontend folder both, using "npm install"
+2. create .env file and setup mongoDB database (creds given seprately)
+3. start the both the frontend & backend servers using "npm start" inside respective directories
+4. Login as Customer or Agent.
+```
