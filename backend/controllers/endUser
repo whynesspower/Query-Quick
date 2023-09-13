@@ -92,3 +92,31 @@ exports.addUsers = async (req, res) => {
     console.log(err);
   }
 };
+
+exports.registerCustomer = async (req, res, next) => {
+  try {
+    const { userId, isAgent } = req.body;
+    const newUser = new User({
+      userId: userId,
+      isAgent: isAgent,
+      email: userId,
+    });
+    await newUser.save();
+    return res.status(200).json({
+      message: "user created successfully",
+      success: true,
+      newUser,
+    });
+  } catch (error) {
+    if (error.code === 11000 && error.keyPattern.userId === 1) {
+      return res.status(400).json({
+        message: "user with that userId already exists",
+      });
+    } else {
+      console.error(
+        "An error occurred while creating the user:",
+        error.message
+      );
+    }
+  }
+};
