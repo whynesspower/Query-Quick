@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../models/endUser");
 const Chat = require("../models/chat");
 
 exports.addAgentToChat = async (req, res) => {
