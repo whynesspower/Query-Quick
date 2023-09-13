@@ -46,3 +46,23 @@ exports.loginAgent = async (req, res, next) => {
     });
   }
 };
+
+exports.searchCustomers = async (req, res, next) => {
+  try {
+    const keyword = req.query.search
+      ? {
+          $or: [
+            { name: { $regex: req.query.search, $options: "i" } },
+            { userId: { $regex: req.query.search, $options: "i" } },
+          ],
+        }
+      : {};
+
+    const users = await User.find(keyword).find({ isAgent: false });
+
+    return res.status(200).json({
+      success: true,
+      users,
+    });
+  } catch (err) {}
+};
