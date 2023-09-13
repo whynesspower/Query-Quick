@@ -3,7 +3,7 @@ const csvParser = require("csv-parser");
 
 var userMap = new Set(); // Use a Map to store user information
 
-fs.createReadStream("./file.csv")
+fs.createReadStream("./dataset.csv")
   .pipe(csvParser())
   .on("data", async (row) => {
     const { userId, timestamp, message } = row;
