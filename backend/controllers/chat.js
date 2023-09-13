@@ -38,3 +38,22 @@ exports.addAgentToChat = async (req, res) => {
     console.log(err);
   }
 };
+
+exports.fetchChatList = async (req, res) => {
+  try {
+    Chat.find({})
+      .populate("users")
+      .populate("latestMessage")
+      .sort({ updatedAt: -1 })
+      .then(async (results) => {
+        results = await User.populate(results, {
+          path: "latestMessage.sender",
+          select: "userId isAgent",
+        });
+        res.status(200).send(results);
+      });
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
+  }
+};
