@@ -66,3 +66,29 @@ exports.searchCustomers = async (req, res, next) => {
     });
   } catch (err) {}
 };
+
+exports.addUsers = async (req, res) => {
+  try {
+    for (let i = 0; i < users.length; i++) {
+      const chat = await Chat.findOne({ chatId: users[i].userId });
+      console.log(chat, "******");
+      var message = await Message.create({
+        chat: chat._id,
+        sender: chat.users[0],
+        content: users[i].content,
+        timestamp: users[i].timestamp,
+      });
+      message = await message.populate("sender", "userId isAgent");
+      message = await message.populate("chat");
+      message = await User.populate(message, {
+        path: "chat.users",
+        select: "userId isAgent",
+      });
+      await Chat.findByIdAndUpdate(chat._id, { latestMessage: message });
+    }
+
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    console.log(err);
+  }
+};
