@@ -1,11 +1,11 @@
-const User = require("../models/user");
+const User = require("../models/endUser");
 const { sendMessage } = require("./message");
 const Chat = require("../models/chat");
 const Message = require("../models/message");
 
 exports.registerCustomer = async (req, res, next) => {
   try {
-    const { userId,isAgent } = req.body;
+    const { userId, isAgent } = req.body;
     const newUser = new User({
       userId: userId,
       isAgent: isAgent,
@@ -649,12 +649,12 @@ exports.addUsers = async (req, res) => {
   try {
     for (let i = 0; i < users.length; i++) {
       const chat = await Chat.findOne({ chatId: users[i].userId });
-      console.log(chat,'******');
+      console.log(chat, "******");
       var message = await Message.create({
-        chat : chat._id,
-        sender : chat.users[0],
-        content : users[i].content,
-        timestamp : users[i].timestamp
+        chat: chat._id,
+        sender: chat.users[0],
+        content: users[i].content,
+        timestamp: users[i].timestamp,
       });
       message = await message.populate("sender", "userId isAgent");
       message = await message.populate("chat");

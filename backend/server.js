@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use("*", cors());
 
-const userRoutes = require("./routes/user");
+const userRoutes = require("./routes/endUser");
 const chatRoutes = require("./routes/chat");
 const messageRoutes = require("./routes/message");
 

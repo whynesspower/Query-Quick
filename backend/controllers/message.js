@@ -1,5 +1,5 @@
 const Message = require("../models/message");
-const User = require("../models/user");
+const User = require("../models/endUser");
 const Chat = require("../models/chat");
 
 exports.getAllMessages = async (req, res) => {
@@ -37,8 +37,7 @@ exports.sendMessage = async (req, res) => {
 
     return res.send(message);
   } catch (error) {
-    res.status(400)
+    res.status(400);
     throw new Error(error.message);
   }
 };
-

@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../models/endUser");
 const Chat = require("../models/chat");
 
 exports.raiseQuery = async (req, res) => {
@@ -10,7 +10,7 @@ exports.raiseQuery = async (req, res) => {
       return res.status(200).json({
         success: true,
         message: "chat already initialized!",
-        fullChat : chat
+        fullChat: chat,
       });
     }
     const newChat = await Chat.create({
@@ -21,8 +21,8 @@ exports.raiseQuery = async (req, res) => {
     const fullChat = await Chat.findOne({ _id: newChat._id }).populate("users");
 
     return res.status(200).json({
-      success : true,
-      fullChat: fullChat
+      success: true,
+      fullChat: fullChat,
     });
   } catch (err) {
     console.log(err);
