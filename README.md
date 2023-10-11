@@ -10,12 +10,7 @@
 4. Login as Customer or Agent.
 ```
 
-## Video Demo Link on Drive:
+Video Demo Link on Drive:
 
 https://drive.google.com/file/d/1SNwVSoHki6-wCKYoNvOpmXxt_1P9AM8Q/view?usp=sharing
-
-OR
-
-## Unlisted Youtube video:
-
 https://youtu.be/K5St0kOrPa0
