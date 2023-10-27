@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 import { Box } from "@chakra-ui/layout";
-import { ChatState } from '../../context/chatContext'
-import ChatBox from '../CustomerChat/Chat'
+import { ChatState } from "../../context/chatContext";
+import ChatBox from "../CustomerChat/Chat";
 
 const Chat = ({ fetchAgain, setFetchAgain }) => {
   const { selectedChat } = ChatState();
@@ -20,6 +20,6 @@ const Chat = ({ fetchAgain, setFetchAgain }) => {
       <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
     </Box>
   );
-}
+};
 
-export default Chat
+export default Chat;
