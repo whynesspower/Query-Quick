@@ -1,3 +1,4 @@
+import React, { FC } from "react";
 import { Routes, Route } from "react-router-dom";
 import Landing from "./pages/Home";
 import SignInCustomer from "./pages/customers/SignIn";
@@ -8,7 +9,7 @@ import AgentChatBox from "./pages/agents/ChatBox";
 import SignupCustomer from "./pages/customers/Signup";
 import SignupAgent from "./pages/agents/SingUp";
 
-function App() {
+const App: FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
@@ -21,6 +22,6 @@ function App() {
       <Route path="/agentsignup" element={<SignupAgent />} />
     </Routes>
   );
-}
+};
 
 export default App;
